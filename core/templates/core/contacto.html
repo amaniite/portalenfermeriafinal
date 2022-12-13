@@ -1,0 +1,91 @@
+
+    {% extends "core/base_generic.html" %}
+    {% load static %}
+    {% block content %}
+    
+    <body class="body1">
+      
+        <nav class="navbar  navbar-expand-lg navbar-dark">
+            <div class="container">
+                <a class="navbar-brand" href="{% url 'home' %}">Portal Prestaciones Enfermeria</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="">Quienes Somos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="{% url 'contacto' %}">Contacto</a>
+                        </li>
+                        {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page">Bienvenido/a {{user.username}}</a>
+                        </li>
+                        {% endif %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link active dropdown-toggle a1 " href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              Mi cuenta
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      {% if user.is_authenticated %}
+                  <li><a class="dropdown-item a1 " href="{% url 'modificar_eu' user=user.username%}" >Modificar mi cuenta</a></li>
+                              <li><a class="dropdown-item a1 "href="{% url 'logout' %}">Cerrar Sesion</a></li>
+                              {%else%}
+                              <li><hr class="dropdown-menu"></li>
+                              <li><a class="dropdown-item a1 " href="{% url 'login' %}">Iniciar Sesion</a></li>
+                              <li><a class="dropdown-item a1 " href="{% url 'registroenfermera'%}">Registrarse Enfermera/o</a></li>
+                              <li><a class="dropdown-item a1 " >Registrarse Usuario</a></li>
+                              {% endif %}
+                            
+                            </ul> 
+                          </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        
+      
+      
+      <!--Header-->
+      <header class="mt-5">
+          <div class="container">
+              <div class="row ">
+  
+                  <div class=" texto-header col-lg-10 cols-xs-12 my-auto">
+                      <h2>TE INVITAMOS A CONTACTARNOS CON NOSOTROS </h2>
+                      <hr class="border-dark">
+                      <h5>Rellena tus datos y envianos tus comentarios </h5>
+                  </div>
+              </div>
+          </div>
+      </header>
+      <!--Formulario-->
+      <section class="container my-5 d-none d-lg-block border border-secondary">
+          <form class ="m-3">
+              <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label">Nombre Completo</label>
+                  <input type="text" class="form-control" >
+                </div>
+              <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Correo electronico</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Telefono</label>
+                <input  class="form-control" >
+              </div>
+              <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label">Comentario</label>
+                  <input type="email" class="form-control p-5" id="exampleInputEmail1" aria-describedby="emailHelp">
+                </div>
+              <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
+      </section>
+      {% endblock %}

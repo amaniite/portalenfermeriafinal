@@ -1,0 +1,28 @@
+{% extends "core/base_generic.html" %}
+{% load static %}
+{% block content %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+        <div class="container col-md-8 col-md-offset-5">
+            <div class="login-container-wrapper2 clearfix">
+                <ul class="switcher clearfix my-0">
+                    <h4 class="first logo active text-center" data-tab="login">Edita tus Datos</h4>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="login">
+                        <div class="container register-form">
+                            <form action="" method="POST">
+                                {% csrf_token %}
+                                {{ form | crispy }}
+                                <div class="text-center">
+                                <input id="login-button" type="reset" class="btn btn-success btn-lg btn-block" value="Cancelar">
+                                <input id="login-button" type="submit" class="btn btn-success btn-lg btn-block" value="Editar">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
+  

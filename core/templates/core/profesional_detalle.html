@@ -1,0 +1,91 @@
+{% extends "core/base_generic.html" %}
+{% load static %}
+{% block content %}
+
+    <body class ="body1">
+
+	<nav class="navbar  navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">Portal Prestaciones Enfermeria</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="">Quienes Somos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'contacto' %}">Contacto</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page">Bienvenido/a {{user.username}}</a>
+                    </li>
+                    {% endif %}
+                    <li class="nav-item dropdown">
+						<a class="nav-link active dropdown-toggle a1 " href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						  Mi cuenta
+						</a>
+						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            {% if user.is_authenticated %}
+						  <li><a class="dropdown-item a1 " href="{% url 'logout' %}">Cerrar Sesion</a></li>
+						  {%else%}
+						  <li><hr class="dropdown-menu"></li>
+						  <li><a class="dropdown-item a1 " href="{% url 'login' %}">Iniciar Sesion</a></li>
+						  <li><a class="dropdown-item a1 " href="{% url 'registroenfermera' %}">Registrarse Enfermera/o</a></li>
+						  <li><a class="dropdown-item a1 " >Registrarse Usuario</a></li>
+						  {% endif %}
+						
+						</ul> 
+					  </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+	
+	<!-- Home -->
+	<div class="container-fluid center">
+	  <section class="row col contenedor-main align-items-center home-section">
+
+		<!-- Seccion de Publicaciones -->
+        
+		<div class=" post-section p-5 ">
+           <h3>Detalle Profesional</h3>
+
+		  <div class="post p-3 bg-light text-dark bg-opacity-20">
+			<h4>{{profesional.primer_nombre}} {{profesional.segundo_nombre}}  {{profesional.primer_apellido}}  {{profesional.segundo_apellido}}</h4>
+            <h5>Datos generales:</h5>
+			<ul><p> <strong>Localización:</strong> {{profesional.comuna}} , {{profesional.region}}</p></ul>
+            <ul><p><strong>Correo electrónico:</strong> {{profesional.correo_electronico}}</p></ul>
+            <ul><p><strong>Numero de teléfono:</strong> {{profesional.telefono}}</p></ul>
+            <ul><p><strong>Valoración de Profesional:</strong> Sin valoración</p></ul>
+			<div class="my-2">
+                <h5 class="mb-3">Prestación:</h5>
+			  <span class="prestaciones-pro p-1 px-2 mx-1">{{profesional.prestacion}}</span>  
+			</div>
+            <p><strong>Valor prestación:</strong> $ {{profesional.valor}} pesos </p>
+			<div>
+              <div>
+                <h5 class="mb-3">Descripción del profesional:</h5>
+                <div  class="border border-secondary m-3 rounded-3">
+                    <p class="p-1 px-2 mx-1">{{profesional.descripcion}}</p>  
+                </div>
+			</div>
+			<div class="text-center">
+                <a href="{% url 'home' %}">
+                    <button type="button" class="btn btn-info btn-outline-primary btn-sm rounded-pill text-light px-4">Volver al home</button>
+                  </a> 
+			  </div>
+		  </div>
+          <br>
+        
+		</div>
+	  </section>
+	</body>
+{% endblock %}

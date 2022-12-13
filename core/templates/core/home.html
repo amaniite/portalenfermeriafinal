@@ -1,0 +1,101 @@
+{% extends "core/base_generic.html" %}
+{% load static %}
+{% block content %}
+
+    <body class ="body1">
+
+	<nav class="navbar  navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">Portal Prestaciones Enfermeria</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="">Quienes Somos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'contacto' %}">Contacto</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page">Bienvenido/a {{user.username}}</a>
+                    </li>
+                    {% endif %}
+                    <li class="nav-item dropdown">
+						<a class="nav-link active dropdown-toggle a1 " href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						  Mi cuenta
+						</a>
+						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  {% if user.is_authenticated %}
+              <li><a class="dropdown-item a1 " href="{% url 'modificar_eu' user=user.username%}" >Modificar mi cuenta</a></li>
+						  <li><a class="dropdown-item a1 "href="{% url 'logout' %}">Cerrar Sesion</a></li>
+						  {%else%}
+						  <li><hr class="dropdown-menu"></li>
+						  <li><a class="dropdown-item a1 " href="{% url 'login' %}">Iniciar Sesion</a></li>
+						  <li><a class="dropdown-item a1 " href="{% url 'registroenfermera'%}">Registrarse Enfermera/o</a></li>
+						  <li><a class="dropdown-item a1 " >Registrarse Usuario</a></li>
+						  {% endif %}
+						
+						</ul> 
+					  </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+	
+	<!-- Home -->
+
+	<div class="container-fluid">
+    
+	  <section class="row col contenedor-main align-items-center home-section">
+		<!-- Seccion de Filtros -->
+		<aside class="col-md-2 filters">
+		  <h4 class="list-tittle">Prestaciones</h4>
+		  <ul>
+            {% for p in profesionales %}
+            <li>
+                <a href="">{{p.prestacion}}</a>
+              </li>
+            {% endfor %}
+		  </ul>
+		</aside>
+  
+		<!-- Seccion de Publicaciones -->
+
+
+		<div class="col-md-8 post-section">
+      <div class="container center">
+        <form class="form-inline my-2 col-md-8 mr-4" action="{% url 'search' %}">
+          <input class"form-control mr-sm-2" name="busqueda" type"search" placeholder="Ingrese comuna" aria-label="search">
+          <button type="submit" class="btn btn-info btn-outline-primary btn-sm rounded-pill text-light px-4">Buscar</button>
+        </form>
+      </div>
+            {% for p in profesionales %}
+		  <div class="post p-3">
+			<h4>{{p.primer_nombre}} {{p.segundo_nombre}}  {{p.primer_apellido}}  {{p.segundo_apellido}}</h4>
+			<p>{{p.comuna}} , {{p.region}}</p>
+			<p><strong>Valoracion de Profesional: </strong>Sin valoración</p>
+			<div class="my-2">
+			  <span class="prestaciones-pro p-1 px-2 mx-1">{{p.prestacion}}</span>  
+			</div>
+      <p><strong>Valor prestación:</strong> $ {{p.valor}} pesos </p>
+			<div class="text-center">
+				<button type="button" class="btn btn-info btn-outline-primary btn-sm rounded-pill text-light px-5">Solicitar Servicio</button>
+                <a href="{{ p.rut_profesional }}">
+                    <button type="button" class="btn btn-info btn-outline-primary btn-sm rounded-pill text-light px-4">Saber mas sobre {{p.primer_nombre}}</button>
+                  </a> 
+            </div>
+		  </div>
+          <br>
+          {% endfor %}
+		</div>
+	  </section>
+	</body>
+{% endblock %}
